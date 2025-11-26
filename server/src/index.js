@@ -34,6 +34,7 @@ app.get("/api/sensors", async (req, res) => {
 app.post("/api/test", (req, res) => {
     const { deviceId, jarak } = req.body;
     console.log(`[DATA MASUK] Device: ${deviceId} | Jarak: ${jarak}`);
+    res.json({ status: "success", message: "Data diterima" });
 });
 
 // update status sensor
