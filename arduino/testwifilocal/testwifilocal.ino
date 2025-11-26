@@ -2,10 +2,10 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "Nama wifi";
-const char* password = "pass";
+const char* ssid = "s22";
+const char* password = "1234567812345678";
 
-const char* serverUrl = "http://.../api/sensor";
+const char* serverUrl = "http://10.150.245.240:3000/api/sensor";
 
 void setup() {
   Serial.begin(115200);
@@ -24,7 +24,7 @@ void loop() {
     http.begin(serverUrl);
     http.addHeader("Content-Type", "application/json");
     JsonDocument doc;
-    doc["deviceId"] = "ESP32-CikalHandosme";
+    doc["deviceId"] = "ESP32-";
     doc["jarak"] = 700;
 
     String jsonOutput;
