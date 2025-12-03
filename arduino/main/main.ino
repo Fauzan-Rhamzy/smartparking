@@ -2,15 +2,15 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char *ssid = "s22"; // ganit wifi pass sendiri
-const char *password = "1234567812345678";
+const char *ssid = "___"; // ganit wifi pass sendiri
+const char *password = "___";
 
 // untuk sso unpar
 // const char* ssid     = "UNPAR";
 // const char* username = "6182201078@student.unpar.ac.id";
 // const char* password = "618078SU";
 
-const char *serverUrl = "http://192.168.1.3:3000/api/test";
+const char *serverUrl = "http://68.183.182.173:3000/api/test";
 
 const int trigPin = 18;
 const int echoPin = 19;
