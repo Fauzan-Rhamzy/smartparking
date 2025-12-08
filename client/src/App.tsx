@@ -1,6 +1,6 @@
 // import Header from "./components/Header";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptySlotsInfo from "./components/EmptySlotInfo.tsx";
 import ParkingSlotHorizontal from "./components/ParkingSlotHorizontal.tsx";
 import ParkingSlotVertical from "./components/ParkingSlotVertical.tsx";
@@ -9,40 +9,59 @@ import RoadVertical from "./components/RoadVertical.tsx";
 import type { ParkingSlotData } from "./types.ts";
 
 function App() {
-  const [slots, setSlots] = useState<ParkingSlotData[]>([
-    { id: 1, status: "empty" },
-    { id: 2, status: "occupied" },
-    { id: 3, status: "inactive" },
-    { id: 4, status: "empty" },
-    { id: 5, status: "occupied" },
-    { id: 6, status: "empty" },
-    { id: 7, status: "inactive" },
-    { id: 8, status: "empty" },
-    { id: 9, status: "occupied" },
-    { id: 10, status: "empty" },
-    { id: 11, status: "inactive" },
-    { id: 12, status: "empty" },
-    { id: 13, status: "occupied" },
-    { id: 14, status: "empty" },
-    { id: 15, status: "occupied" },
-    { id: 16, status: "inactive" },
-    { id: 17, status: "empty" },
-    { id: 18, status: "occupied" },
-    { id: 19, status: "empty" },
-    { id: 20, status: "occupied" },
-    { id: 21, status: "inactive" },
-    { id: 22, status: "empty" },
-    { id: 23, status: "empty" },
-    { id: 24, status: "occupied" },
-    { id: 25, status: "inactive" },
-    { id: 26, status: "empty" },
-    { id: 27, status: "occupied" },
-    { id: 28, status: "empty" },
-    { id: 29, status: "occupied" },
-    { id: 30, status: "inactive" },
-    { id: 31, status: "empty" },
-    { id: 32, status: "occupied" },
-  ]);
+  const [slots, setSlots] = useState<ParkingSlotData[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/sensors");
+        const dataJson = await response.json();
+
+        setSlots(dataJson);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error("Unknown error", error);
+        }
+      }
+    };
+    getData();
+  }, []);
+  // const [slots, setSlots] = useState<ParkingSlotData[]>([
+  // { id: 1, status: "empty" },
+  // { id: 2, status: "occupied" },
+  // { id: 3, status: "inactive" },
+  // { id: 4, status: "empty" },
+  // { id: 5, status: "occupied" },
+  // { id: 6, status: "empty" },
+  // { id: 7, status: "inactive" },
+  // { id: 8, status: "empty" },
+  // { id: 9, status: "occupied" },
+  // { id: 10, status: "empty" },
+  // { id: 11, status: "inactive" },
+  // { id: 12, status: "empty" },
+  // { id: 13, status: "occupied" },
+  // { id: 14, status: "empty" },
+  // { id: 15, status: "occupied" },
+  // { id: 16, status: "inactive" },
+  // { id: 17, status: "empty" },
+  // { id: 18, status: "occupied" },
+  // { id: 19, status: "empty" },
+  // { id: 20, status: "occupied" },
+  // { id: 21, status: "inactive" },
+  // { id: 22, status: "empty" },
+  // { id: 23, status: "empty" },
+  // { id: 24, status: "occupied" },
+  // { id: 25, status: "inactive" },
+  // { id: 26, status: "empty" },
+  // { id: 27, status: "occupied" },
+  // { id: 28, status: "empty" },
+  // { id: 29, status: "occupied" },
+  // { id: 30, status: "inactive" },
+  // { id: 31, status: "empty" },
+  // { id: 32, status: "occupied" },
+  // ]);
   return (
     <>
       <div className="relative min-h-screen">

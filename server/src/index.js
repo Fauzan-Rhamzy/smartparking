@@ -4,48 +4,54 @@ const app = express();
 import pool from "./db.js";
 
 // middleware
-// import cors from "cors";
-// app.use(cors());
+import cors from "cors";
+app.use(cors());
 app.use(express.json());
-    
+
+import { Server } from "socket.io";
+
+// import {createServer} from "http";
+
 // TEST DB CONNECTION //
-app.get("/test-db", async (req, res) => {
+app.get("/test-db", async (request, response) => {
     try {
         const result = await pool.query("SELECT NOW()");
-        res.json({ success: true, server_time: result.rows[0] });
+        response.json({ success: true, server_time: result.rows[0] });
         console.log("Database connection successful");
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        response.status(500).json({ error: err.message });
         console.error("Database connection error:", err);
     }
 });
 
 // ambil semua sensor
-app.get("/api/sensors", async (req, res) => {
+app.get("/api/sensors", async (request, response) => {
     try {
         const result = await pool.query("SELECT * FROM sensors ORDER BY id");
-        res.json(result.rows);
+
+        request
+        response.json(result.rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        response.status(500).json({ error: err.message });
     }
 });
 
 // test endpoint
-app.post("/api/test", (req, res) => {
-    const { deviceId, jarak } = req.body;
+app.post("/api/test", (request, response) => {
+    const { deviceId, jarak } = request.body;
     console.log(`[DATA MASUK] Device: ${deviceId} | Jarak: ${jarak}`);
-    res.json({ status: "success", message: "Data diterima" });
+    response.json({ status: "success", message: "Data diterima" });
 });
 
 // update status sensor
-app.patch("/api/sensor/update", async (req, res) => {
-  const { sensor_name, status } = req.body;
+app.patch("/api/sensor/update", async (request, response) => {
+  const { sensor_name, status } = request.body;
   console.log(`Updating sensor ${sensor_name} to status ${status}`);
     if (!sensor_name || !status) {
-        return res.status(400).json({ error: "sensor_name and status are required" });
+        return response.status(400).json({ error: "sensor_name and status are required" });
     }
     if (status!=='occupied' && status!=='empty' && status!=='inactive') {
-        return res.status(400).json({ error: "Invalid status value" });
+        return response.status(400).json({ error: "Invalid status value" });
     }
     try {
         await pool.query(
@@ -53,9 +59,9 @@ app.patch("/api/sensor/update", async (req, res) => {
             [status, sensor_name]
         );
 
-        res.json({ success: true });
+        response.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        response.status(500).json({ error: err.message });
     }
 });
 
