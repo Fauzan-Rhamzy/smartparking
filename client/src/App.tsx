@@ -11,6 +11,7 @@ import type { ParkingSlotData } from "./types.ts";
 function App() {
   const [slots, setSlots] = useState<ParkingSlotData[]>([]);
 
+  const [emptySlots, setEmptySlots] = useState(0);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -18,6 +19,9 @@ function App() {
         const dataJson = await response.json();
 
         setSlots(dataJson);
+        setEmptySlots(
+          dataJson.filter((s: ParkingSlotData) => s.status === "empty").length
+        );
       } catch (error) {
         if (error instanceof Error) {
           console.error(error.message);
@@ -65,7 +69,7 @@ function App() {
   return (
     <>
       <div className="relative min-h-screen">
-        <EmptySlotsInfo />
+        <EmptySlotsInfo empty={emptySlots} />
 
         <div className="flex flex-col">
           {/* atas */}

@@ -29,7 +29,7 @@ app.get("/api/sensors", async (request, response) => {
     try {
         const result = await pool.query("SELECT * FROM sensors ORDER BY id");
 
-        request
+        // request
         response.json(result.rows);
     } catch (err) {
         response.status(500).json({ error: err.message });
@@ -38,26 +38,36 @@ app.get("/api/sensors", async (request, response) => {
 
 // test endpoint
 app.post("/api/test", (request, response) => {
-    const { deviceId, jarak } = request.body;
-    console.log(`[DATA MASUK] Device: ${deviceId} | Jarak: ${jarak}`);
+    const { sensor_name, jarak } = request.body;
+    console.log(`[DATA MASUK] Device: ${sensor_name} | Jarak: ${jarak}`);
     response.json({ status: "success", message: "Data diterima" });
 });
 
 // update status sensor
 app.patch("/api/sensor/update", async (request, response) => {
-  const { sensor_name, status } = request.body;
-  console.log(`Updating sensor ${sensor_name} to status ${status}`);
-    if (!sensor_name || !status) {
-        return response.status(400).json({ error: "sensor_name and status are required" });
+  const { sensor_name, distance } = request.body;
+
+  console.log(`Receivewd request from sensor ${sensor_name} with distance ${distance}`);
+
+    if (!sensor_name || !distance) {
+        return response.status(400).json({ error: "sensor_name and distance are required" });
     }
-    if (status!=='occupied' && status!=='empty' && status!=='inactive') {
-        return response.status(400).json({ error: "Invalid status value" });
-    }
+
     try {
-        await pool.query(
-            "UPDATE sensors SET status = $1, updated_at = NOW() WHERE sensor_name = $2",
-            [status, sensor_name]
+
+        const thresholdAndStatus = await pool.query(
+            "SELECT threshold, status FROM sensors WHERE sensor_name = $1",
+            [sensor_name]
         );
+
+        const status = distance <= thresholdAndStatus.rows[0].threshold ? 'occupied' : 'empty';
+
+        if (thresholdAndStatus.status !== status) {
+            await pool.query(
+                "UPDATE sensors SET status = $1, updated_at = NOW() WHERE sensor_name = $2",
+                [status, sensor_name]
+            );
+        }
 
         response.json({ success: true });
     } catch (err) {
