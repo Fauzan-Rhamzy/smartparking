@@ -15,7 +15,10 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/sensors");
+        // from local
+        // const response = await fetch("http://localhost:3000/api/sensors");
+        // from actual server
+        const response = await fetch("http://34.50.93.23:3000/api/sensors");
         const dataJson = await response.json();
 
         setSlots(dataJson);
@@ -31,7 +34,7 @@ function App() {
       }
     };
     getData();
-  }, []);
+  });
   // const [slots, setSlots] = useState<ParkingSlotData[]>([
   // { id: 1, status: "empty" },
   // { id: 2, status: "occupied" },
