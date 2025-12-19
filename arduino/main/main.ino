@@ -10,7 +10,7 @@ const char *password = "___";
 // const char* username = "6182201078@student.unpar.ac.id";
 // const char* password = "618078SU";
 
-const char *serverUrl = "http://68.183.182.173:3000/api/test";
+const char *serverUrl = "http://34.50.93.23:3000/api/sensor/update";
 
 const int trigPin = 18;
 const int echoPin = 19;
@@ -57,13 +57,13 @@ void loop() {
 
     // doc["deviceId"] = "ESP32-";
     // doc["jarak"] = 700;
-    doc["sensor_name"] = "ESP32-";
-    doc["jarak"] = distance;
+    doc["sensor_name"] = "soba";
+    doc["distance"] = distance;
 
     String jsonOutput;
     serializeJson(doc, jsonOutput);
 
-    int httpResponseCode = http.POST(jsonOutput);
+    int httpResponseCode = http.PATCH(jsonOutput);
 
     if (httpResponseCode > 0)
     {
