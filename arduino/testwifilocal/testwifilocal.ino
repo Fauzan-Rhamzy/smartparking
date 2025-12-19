@@ -2,10 +2,10 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char *ssid = "Ram G";
-const char *password = "hehohiha";
+const char *ssid = "***";
+const char *password = "***";
 
-const char *serverUrl = "http://172.20.10.2:3000/api/test";
+const char *serverUrl = "http://192.168.1.3:3000/api/test";
 
 void setup()
 {
