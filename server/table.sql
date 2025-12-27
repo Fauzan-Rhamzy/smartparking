@@ -11,7 +11,7 @@ sensor_name, status
 ) VALUES (
     'cikol', 'empty'
 ),(
-    'soba', 'active'
+    'soba', 'occupied'
 ),(
     'ramboy', 'inactive'
 )
