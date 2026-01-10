@@ -71,10 +71,13 @@ function App() {
   // ]);
   return (
     <>
-      <div className="relative min-h-screen">
+      <div className="fixed top-6 left-6 z-50">
         <EmptySlotsInfo empty={emptySlots} />
+      </div>
 
-        <div className="flex flex-col">
+      <div className="relative min-h-screen items-center flex justify-center">
+        {/* <div className="flex flex-col w-fit"> */}
+        <div className="flex flex-col w-fit mt-10">
           {/* atas */}
           <div className="ml-1 mb-10 flex">
             <div className="m-3">
@@ -221,7 +224,7 @@ function App() {
           </div>
 
           {/* bawah kanan */}
-          <div className="flex gap-2 items-end ml-auto mr-7 mt-10">
+          <div className="flex gap-2 items-end ml-auto mt-10 self-end mr-3">
             <ParkingSlotVertical id={30} slots={slots} />
             <ParkingSlotVertical id={31} slots={slots} />
             <ParkingSlotVertical id={32} slots={slots} />
