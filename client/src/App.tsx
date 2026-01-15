@@ -7,6 +7,8 @@ import ParkingSlotVertical from "./components/ParkingSlotVertical.tsx";
 import Pillar from "./components/Pillar.tsx";
 import RoadVertical from "./components/RoadVertical.tsx";
 import type { ParkingSlotData } from "./types.ts";
+import StairsArea from "./components/StairsArea.tsx";
+import LiftArea from "./components/LiftArea.tsx";
 
 function App() {
   const [slots, setSlots] = useState<ParkingSlotData[]>([]);
@@ -75,159 +77,111 @@ function App() {
         <EmptySlotsInfo empty={emptySlots} />
       </div>
 
-      <div className="relative min-h-screen items-center flex justify-center">
-        {/* <div className="flex flex-col w-fit"> */}
-        <div className="flex flex-col w-fit mt-10">
+      <div className="relative min-h-screen items-center flex justify-center bg-blue-100">
+        {/* area parkir */}
+        <div className=" bg-red-300 flex flex-col">
           {/* atas */}
-          <div className="ml-1 mb-10 flex">
-            <div className="m-3">
-              <ParkingSlotHorizontal id={1} slots={slots} />
-            </div>
-            <div className="m-3">
-              <ParkingSlotHorizontal id={2} slots={slots} />
-            </div>
-            <div className="m-3">
-              <ParkingSlotHorizontal id={3} slots={slots} />
-            </div>
-            <div className="m-3">
-              <ParkingSlotHorizontal id={4} slots={slots} />
-            </div>
-          </div>
+          <div className="flex items-center gap-2"></div>
 
           {/* tengah */}
-          <div className="flex gap-20 ml-1">
-            {/* kiri */}
-            <div className="flex gap-2">
-              {/* kiri A */}
-              <div className="kiri-A ml-1">
-                <div className="">
-                  <Pillar />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={5} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={6} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={7} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={8} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={9} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={10} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={11} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={12} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={13} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={14} slots={slots} />
-                </div>
+          <div className="flex items-center gap-2">
+            {/* kiri lift */}
+            <div>
+              <Pillar />
+            </div>
+            <div>
+              <div className="flex gap-2">
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <Pillar />
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
               </div>
-
-              {/* kiri B */}
-              <div className="kiri-B flex flex-col items-end">
-                <div className="">
-                  <Pillar />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={15} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={16} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={17} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={18} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={19} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={20} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={21} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={22} slots={slots} />
-                </div>
-                <div className="">
-                  <ParkingSlotHorizontal id={23} slots={slots} />
-                </div>
-
-                <div className="">
-                  <Pillar />
-                </div>
-
-                <div className="">
-                  <ParkingSlotHorizontal id={24} slots={slots} />
-                </div>
+              <div className="flex gap-2 items-baseline-last">
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <Pillar />
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
               </div>
             </div>
 
-            {/* kanan */}
-            <div className="flex gap-2">
-              {/* parkir */}
-              <div className="flex flex-col gap-2 items-end mt-3">
-                <ParkingSlotVertical id={25} slots={slots} />
-                <ParkingSlotVertical id={26} slots={slots} />
-                <ParkingSlotVertical id={27} slots={slots} />
-                <ParkingSlotVertical id={28} slots={slots} />
-                <ParkingSlotVertical id={29} slots={slots} />
-                <Pillar />
-              </div>
+            {/* lift */}
+            <div className="">
+              <LiftArea />
+            </div>
 
-              {/* jalan naik */}
-              <div className="flex">
-                <RoadVertical way="up" />
-                <RoadVertical way="down" />
+            {/* kanan lift */}
+            <div>
+              <div className="flex gap-2">
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <Pillar />
+                <ParkingSlotVertical />
+              </div>
+              <div className="flex gap-2 items-baseline-last">
+                <ParkingSlotVertical />
+                <ParkingSlotVertical />
+                <Pillar />
+                <ParkingSlotVertical />
               </div>
             </div>
           </div>
 
-          {/* bawah kanan */}
-          <div className="flex gap-2 items-end ml-auto mt-10 self-end mr-3">
-            <ParkingSlotVertical id={30} slots={slots} />
-            <ParkingSlotVertical id={31} slots={slots} />
-            <ParkingSlotVertical id={32} slots={slots} />
+          {/* bagian bawah */}
+          <div className="flex gap-2 mt-20">
+            <div className="mr-23">
+              <Pillar />
+              <Pillar />
+            </div>
+
+            <div>
+              <ParkingSlotVertical />
+            </div>
+
+            <div>
+              <Pillar />
+            </div>
+
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
+
+            <div>
+              <StairsArea />
+            </div>
+
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
+
+            <div>
+              <Pillar />
+            </div>
+
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
+            <div>
+              <ParkingSlotVertical />
+            </div>
           </div>
         </div>
       </div>
