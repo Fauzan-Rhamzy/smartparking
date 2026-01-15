@@ -1,6 +1,6 @@
 // import Header from "./components/Header";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptySlotsInfo from "./components/EmptySlotInfo.tsx";
 import ParkingSlotHorizontal from "./components/ParkingSlotHorizontal.tsx";
 import ParkingSlotVertical from "./components/ParkingSlotVertical.tsx";
@@ -9,46 +9,75 @@ import RoadVertical from "./components/RoadVertical.tsx";
 import type { ParkingSlotData } from "./types.ts";
 
 function App() {
-  const [slots, setSlots] = useState<ParkingSlotData[]>([
-    { id: 1, status: "empty" },
-    { id: 2, status: "occupied" },
-    { id: 3, status: "inactive" },
-    { id: 4, status: "empty" },
-    { id: 5, status: "occupied" },
-    { id: 6, status: "empty" },
-    { id: 7, status: "inactive" },
-    { id: 8, status: "empty" },
-    { id: 9, status: "occupied" },
-    { id: 10, status: "empty" },
-    { id: 11, status: "inactive" },
-    { id: 12, status: "empty" },
-    { id: 13, status: "occupied" },
-    { id: 14, status: "empty" },
-    { id: 15, status: "occupied" },
-    { id: 16, status: "inactive" },
-    { id: 17, status: "empty" },
-    { id: 18, status: "occupied" },
-    { id: 19, status: "empty" },
-    { id: 20, status: "occupied" },
-    { id: 21, status: "inactive" },
-    { id: 22, status: "empty" },
-    { id: 23, status: "empty" },
-    { id: 24, status: "occupied" },
-    { id: 25, status: "inactive" },
-    { id: 26, status: "empty" },
-    { id: 27, status: "occupied" },
-    { id: 28, status: "empty" },
-    { id: 29, status: "occupied" },
-    { id: 30, status: "inactive" },
-    { id: 31, status: "empty" },
-    { id: 32, status: "occupied" },
-  ]);
+  const [slots, setSlots] = useState<ParkingSlotData[]>([]);
+
+  const [emptySlots, setEmptySlots] = useState(0);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        // from local
+        // const response = await fetch("http://localhost:3000/api/sensors");
+        // from actual server
+        const response = await fetch("http://34.50.93.23:3000/api/sensors");
+        const dataJson = await response.json();
+
+        setSlots(dataJson);
+        setEmptySlots(
+          dataJson.filter((s: ParkingSlotData) => s.status === "empty").length
+        );
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error("Unknown error", error);
+        }
+      }
+    };
+    getData();
+  });
+  // const [slots, setSlots] = useState<ParkingSlotData[]>([
+  // { id: 1, status: "empty" },
+  // { id: 2, status: "occupied" },
+  // { id: 3, status: "inactive" },
+  // { id: 4, status: "empty" },
+  // { id: 5, status: "occupied" },
+  // { id: 6, status: "empty" },
+  // { id: 7, status: "inactive" },
+  // { id: 8, status: "empty" },
+  // { id: 9, status: "occupied" },
+  // { id: 10, status: "empty" },
+  // { id: 11, status: "inactive" },
+  // { id: 12, status: "empty" },
+  // { id: 13, status: "occupied" },
+  // { id: 14, status: "empty" },
+  // { id: 15, status: "occupied" },
+  // { id: 16, status: "inactive" },
+  // { id: 17, status: "empty" },
+  // { id: 18, status: "occupied" },
+  // { id: 19, status: "empty" },
+  // { id: 20, status: "occupied" },
+  // { id: 21, status: "inactive" },
+  // { id: 22, status: "empty" },
+  // { id: 23, status: "empty" },
+  // { id: 24, status: "occupied" },
+  // { id: 25, status: "inactive" },
+  // { id: 26, status: "empty" },
+  // { id: 27, status: "occupied" },
+  // { id: 28, status: "empty" },
+  // { id: 29, status: "occupied" },
+  // { id: 30, status: "inactive" },
+  // { id: 31, status: "empty" },
+  // { id: 32, status: "occupied" },
+  // ]);
   return (
     <>
-      <div className="relative min-h-screen">
-        <EmptySlotsInfo />
+      <div className="fixed top-6 left-6 z-50">
+        <EmptySlotsInfo empty={emptySlots} />
+      </div>
 
-        <div className="flex flex-col">
+      <div className="relative min-h-screen items-center flex justify-center">
+        {/* <div className="flex flex-col w-fit"> */}
+        <div className="flex flex-col w-fit mt-10">
           {/* atas */}
           <div className="ml-1 mb-10 flex">
             <div className="m-3">
@@ -195,7 +224,7 @@ function App() {
           </div>
 
           {/* bawah kanan */}
-          <div className="flex gap-2 items-end ml-auto mr-7 mt-10">
+          <div className="flex gap-2 items-end ml-auto mt-10 self-end mr-3">
             <ParkingSlotVertical id={30} slots={slots} />
             <ParkingSlotVertical id={31} slots={slots} />
             <ParkingSlotVertical id={32} slots={slots} />

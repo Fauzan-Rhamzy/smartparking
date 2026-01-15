@@ -1,7 +1,8 @@
-function EmptySlotsInfo() {
+function EmptySlotsInfo({ empty }: { empty: number }) {
   return (
-    <div className="absolute bottom-5 left-20 -translate-x-1/2 z-50 px-4 py-2 bg-white shadow-lg rounded-lg border text-gray-800 text-sm font-medium">
-      Slot kosong: <span className="font-bold">0/32</span>
+    // <div className="absolute bottom-5 left-20 -translate-x-1/2 z-50 px-4 py-2 bg-white shadow-lg rounded-lg border text-gray-800 text-sm font-medium">
+    <div className="px-4 py-2 bg-white shadow-lg rounded-lg border text-gray-800 text-sm font-medium">
+      Slot kosong: <span className="font-bold">{empty}/32</span>
     </div>
   );
 }
