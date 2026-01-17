@@ -281,7 +281,7 @@ function App() {
 
         setSlots(dataJson);
         setEmptySlots(
-          dataJson.filter((s: ParkingSlotData) => s.status === "empty").length
+          dataJson.filter((s: ParkingSlotData) => s.status === "empty").length,
         );
       } catch (error) {
         if (error instanceof Error) {
@@ -292,7 +292,7 @@ function App() {
       }
     };
     getData();
-  });
+  }, []);
   // const [slots, setSlots] = useState<ParkingSlotData[]>([
   // { id: 1, status: "empty" },
   // { id: 2, status: "occupied" },
@@ -369,7 +369,7 @@ function App() {
         if (type === "X") {
           content = <div />;
         } else if (type === "_") {
-          content = <div className="w-full h-full opacity-10" />;
+          content = <div className="w-full h-full opacity-10"></div>;
         } else if (type === ">") {
           content = <RoadArrow dir="right" />;
         } else if (type === "<") {
@@ -379,15 +379,21 @@ function App() {
         } else if (type === "V") {
           content = <RoadArrow dir="down" />;
         } else if (type === "T") {
-          content = <Pillar />;
+          className += " border border-gray-500 z-10";
+          content = (
+            <div className="w-full h-full bg-[#BFBFBF]" title="Tiang">
+              T
+            </div>
+          );
         } else if (type === "P") {
           const id = slotCounter++;
+          className += " border border-gray-500 z-10";
           content = <ParkingSlotVertical id={id} slots={slots} />;
         } else if (type === "L") {
           className +=
             " bg-gray-700 rounded-md border border-gray-600 text-white font-bold overflow-hidden";
           content = (
-            <div className="scale-125 transform p-4">
+            <div className="scale-125 transform">
               <LiftArea />
             </div>
           );
@@ -411,7 +417,7 @@ function App() {
             }}
           >
             {content}
-          </div>
+          </div>,
         );
       }
     }
@@ -424,25 +430,63 @@ function App() {
         <EmptySlotsInfo empty={emptySlots} />
       </div>
 
-      <div className="min-h-screen bg-gray-200 p-8 mx-auto overflow-auto">
-        <div
-          className="grid gap-2 bg-blue-100 border-4 border-blue-200 p-4 rounded-xl shadow-2xl"
-          style={{
-            gridTemplateColumns: "repeat(24, minmax(40px, 1fr))",
-            gridTemplateRows: `
-              minmax(120px, auto)  /* Row 1: Top Parking */
-              30px                 /* Row 2: Road */
-              30px                 /* Row 3: Road */
-              minmax(120px, auto)  /* Row 4: Mid Top */
-              minmax(120px, auto)  /* Row 5: Mid Bottom */
-              30px                 /* Row 6: Road */
-              30px                 /* Row 7: Road */
-              minmax(120px, auto)  /* Row 8: Bot Parking */
-            `,
-            minWidth: "1200px",
-          }}
-        >
-          {renderGrid()}
+      {/* Container Utama: Overflow Auto + Class no-scrollbar */}
+      <div className="relative min-h-screen bg-gray-200 overflow-auto no-scrollbar">
+        {/* === PETUNJUK SWIPE (Hanya muncul di HP) === */}
+        <div className="md:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 bg-black/60 text-white px-4 py-2 rounded-full text-xs font-medium pointer-events-none animate-pulse flex items-center gap-2 shadow-lg backdrop-blur-sm">
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          <span>Geser untuk melihat area</span>
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </div>
+
+        {/* Wrapper dengan padding atas agar tidak tertutup info slot */}
+        <div className=" pt-24 flex min-w-min">
+          <div
+            // mx-auto: Rata tengah di layar besar
+            className="grid gap-0 bg-blue-100 border-4 border-blue-200 rounded-xl shadow-2xl mx-auto"
+            style={{
+              gridTemplateColumns: "repeat(24, minmax(40px, 1fr))",
+              gridTemplateRows: `
+                minmax(100px, auto)
+                30px
+                30px
+                minmax(100px, auto)
+                minmax(100px, auto)
+                30px
+                30px
+                minmax(100px, auto)
+              `,
+              minWidth: "1100px", // Memaksa scroll horizontal muncul di HP
+            }}
+          >
+            {renderGrid()}
+          </div>
         </div>
       </div>
     </>
