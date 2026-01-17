@@ -40,31 +40,230 @@ function RoadArrow({ dir }: { dir: "up" | "down" | "left" | "right" }) {
   );
 }
 
-
 const RAW_MAP = [
   // ROW 1
-  ["X", "X", "X", "X", "T", "P", "P", "T", "P", "P", "P", "T", "P", "X", "P", "T", "P", "P", "P", "T", "P", "P", "P", "X"],
-  
-  // ROW 2 
-  ["X", "_", "_", "_", "_", "_", ">", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", ">", "_", "_", "_", "_", "_", "X"],
-  
-  // ROW 3 
-  ["X", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "X"],
+  [
+    "X",
+    "X",
+    "X",
+    "X",
+    "T",
+    "P",
+    "P",
+    "T",
+    "P",
+    "P",
+    "P",
+    "T",
+    "P",
+    "X",
+    "P",
+    "T",
+    "P",
+    "P",
+    "P",
+    "T",
+    "P",
+    "P",
+    "P",
+    "X",
+  ],
 
-  // ROW 4 
-  ["X", "^", "_", "T", "P", "P", "P", "T", "P", "P", "L", "L", "L", "L", "L", "L", "L", "P", "P", "T", "P", "_", "V", "X"],
+  // ROW 2
+  [
+    "X",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    ">",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    ">",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "X",
+  ],
 
-  // ROW 5 
-  ["X", "_", "_", "T", "P", "P", "P", "T", "P", "P", "L", "L", "L", "L", "L", "L", "L", "P", "P", "T", "P", "_", "_", "X"],
+  // ROW 3
+  [
+    "X",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "X",
+  ],
 
-  // ROW 6 
-  ["X", "_", "_", "_", "_", "_", "<", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "<", "_", "_", "_", "_", "_", "X"],
+  // ROW 4
+  [
+    "X",
+    "^",
+    "_",
+    "T",
+    "P",
+    "P",
+    "P",
+    "T",
+    "P",
+    "P",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "P",
+    "P",
+    "T",
+    "P",
+    "_",
+    "V",
+    "X",
+  ],
 
-  // ROW 7 
-  ["X", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "X"],
+  // ROW 5
+  [
+    "X",
+    "_",
+    "_",
+    "T",
+    "P",
+    "P",
+    "P",
+    "T",
+    "P",
+    "P",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "P",
+    "P",
+    "T",
+    "P",
+    "_",
+    "_",
+    "X",
+  ],
 
-  // ROW 8 
-  ["X", "^", "_", "T", "V", "_", "P", "T", "P", "P", "P", "S", "S", "S", "S", "S", "P", "P", "P", "T", "P", "P", "P", "X"],
+  // ROW 6
+  [
+    "X",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "<",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "<",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "X",
+  ],
+
+  // ROW 7
+  [
+    "X",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "X",
+  ],
+
+  // ROW 8
+  [
+    "X",
+    "^",
+    "_",
+    "T",
+    "V",
+    "_",
+    "P",
+    "T",
+    "P",
+    "P",
+    "P",
+    "S",
+    "S",
+    "S",
+    "S",
+    "S",
+    "P",
+    "P",
+    "P",
+    "T",
+    "P",
+    "P",
+    "P",
+    "X",
+  ],
 ];
 
 function App() {
@@ -132,12 +331,16 @@ function App() {
   let slotCounter = 1;
   const renderGrid = () => {
     const gridItems: React.ReactNode[] = [];
-  
+
     for (let r = 0; r < RAW_MAP.length; r++) {
-      for (let c = 0; c < RAW_MAP[r].length; c++){
+      for (let c = 0; c < RAW_MAP[r].length; c++) {
         const type = RAW_MAP[r][c];
 
-        if (c > 0 && type === RAW_MAP[r][c - 1] && (type === "L" || type === "S")) {
+        if (
+          c > 0 &&
+          type === RAW_MAP[r][c - 1] &&
+          (type === "L" || type === "S")
+        ) {
           continue;
         }
 
@@ -156,7 +359,7 @@ function App() {
         }
 
         if (type === "L" && r === 3) {
-          rowSpan = 2; 
+          rowSpan = 2;
         }
 
         let content = null;
@@ -164,36 +367,38 @@ function App() {
         const key = `${r}-${c}`;
 
         if (type === "X") {
-           content = <div />;
+          content = <div />;
         } else if (type === "_") {
-           content = <div className="w-full h-full opacity-10" />;
+          content = <div className="w-full h-full opacity-10" />;
         } else if (type === ">") {
-           content = <RoadArrow dir="right" />;
+          content = <RoadArrow dir="right" />;
         } else if (type === "<") {
-           content = <RoadArrow dir="left" />;
+          content = <RoadArrow dir="left" />;
         } else if (type === "^") {
-           content = <RoadArrow dir="up" />;
+          content = <RoadArrow dir="up" />;
         } else if (type === "V") {
-           content = <RoadArrow dir="down" />;
+          content = <RoadArrow dir="down" />;
         } else if (type === "T") {
-           content = <Pillar />;
+          content = <Pillar />;
         } else if (type === "P") {
-           const id = slotCounter++;
-           content = <ParkingSlotVertical id={id} slots={slots} />;
+          const id = slotCounter++;
+          content = <ParkingSlotVertical id={id} slots={slots} />;
         } else if (type === "L") {
-           className += " bg-gray-700 rounded-md border border-gray-600 text-white font-bold overflow-hidden";
-           content = (
-             <div className="scale-125 transform p-4">
-               <LiftArea />
-             </div>
-           );
+          className +=
+            " bg-gray-700 rounded-md border border-gray-600 text-white font-bold overflow-hidden";
+          content = (
+            <div className="scale-125 transform p-4">
+              <LiftArea />
+            </div>
+          );
         } else if (type === "S") {
-           className += " bg-gray-300 rounded-md border border-gray-400 overflow-hidden";
-           content = (
-             <div className="scale-110 transform">
-               <StairsArea />
-             </div>
-           );
+          className +=
+            " bg-gray-300 rounded-md border border-gray-400 overflow-hidden";
+          content = (
+            <div className="scale-110 transform">
+              <StairsArea />
+            </div>
+          );
         }
 
         gridItems.push(
@@ -211,8 +416,7 @@ function App() {
       }
     }
     return gridItems;
-  }
-
+  };
 
   return (
     <>
@@ -220,7 +424,7 @@ function App() {
         <EmptySlotsInfo empty={emptySlots} />
       </div>
 
-      <div className="min-h-screen bg-gray-200 p-8 flex justify-center overflow-auto">
+      <div className="min-h-screen bg-gray-200 p-8 mx-auto overflow-auto">
         <div
           className="grid gap-2 bg-blue-100 border-4 border-blue-200 p-4 rounded-xl shadow-2xl"
           style={{
@@ -235,7 +439,7 @@ function App() {
               30px                 /* Row 7: Road */
               minmax(120px, auto)  /* Row 8: Bot Parking */
             `,
-            minWidth: "1200px" 
+            minWidth: "1200px",
           }}
         >
           {renderGrid()}
