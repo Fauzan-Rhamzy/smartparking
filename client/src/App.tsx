@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import EmptySlotsInfo from "./components/EmptySlotInfo.tsx";
 import ParkingSlotVertical from "./components/ParkingSlotVertical.tsx";
-import Pillar from "./components/Pillar.tsx";
 import type { ParkingSlotData } from "./types.ts";
 import StairsArea from "./components/StairsArea.tsx";
 import LiftArea from "./components/LiftArea.tsx";
 
-// Place this outside the App function or in a separate file
 function RoadArrow({ dir }: { dir: "up" | "down" | "left" | "right" }) {
   const rotation = {
     up: "rotate(-90deg)",
@@ -43,63 +41,16 @@ function RoadArrow({ dir }: { dir: "up" | "down" | "left" | "right" }) {
 const RAW_MAP = [
   // ROW 1
   [
-    "X",
-    "X",
-    "X",
-    "X",
-    "T",
-    "P",
-    "P",
-    "T",
-    "P",
-    "P",
-    "P",
-    "T",
-    "P",
-    "X",
-    "P",
-    "T",
-    "P",
-    "P",
-    "P",
-    "T",
-    "P",
-    "P",
-    "P",
-    "X",
+    "X", "X", "X", "X", "T", "P", "P", "T", "P", "P", "P", "T", "P", "X", "P", "T", "P", "P", "P", "T", "P", "P", "P", "X",
   ],
 
   // ROW 2
   [
-    "X",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    ">",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    ">",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "X",
+    "_", "_", "_", "_", "_", "_", ">", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", ">", "_", "_", "_", "_", "_", "_",
   ],
 
   // ROW 3
   [
-    "X",
     "_",
     "_",
     "_",
@@ -122,7 +73,8 @@ const RAW_MAP = [
     "_",
     "_",
     "_",
-    "X",
+    "_",
+    "_",
   ],
 
   // ROW 4
@@ -183,17 +135,6 @@ const RAW_MAP = [
 
   // ROW 6
   [
-    "X",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "<",
-    "_",
-    "_",
-    "_",
-    "_",
     "_",
     "_",
     "_",
@@ -206,12 +147,22 @@ const RAW_MAP = [
     "_",
     "_",
     "_",
-    "X",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "<",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
   ],
 
   // ROW 7
   [
-    "X",
     "_",
     "_",
     "_",
@@ -234,7 +185,8 @@ const RAW_MAP = [
     "_",
     "_",
     "_",
-    "X",
+    "_",
+    "_",
   ],
 
   // ROW 8
@@ -367,7 +319,19 @@ function App() {
         const key = `${r}-${c}`;
 
         if (type === "X") {
-          content = <div />;
+          content = (
+            <div className="h-full w-[50px] border border-gray-400 bg-gray-200 flex items-center justify-center text-gray-400">
+               <svg 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.5"
+                className="w-2/3 h-2/3"
+               >
+                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+               </svg>
+            </div>
+          );
         } else if (type === "_") {
           content = <div className="w-full h-full opacity-10"></div>;
         } else if (type === ">") {
@@ -471,7 +435,7 @@ function App() {
             // mx-auto: Rata tengah di layar besar
             className="grid gap-0 bg-blue-100 border-4 border-blue-200 rounded-xl shadow-2xl mx-auto"
             style={{
-              gridTemplateColumns: "repeat(24, minmax(40px, 1fr))",
+              gridTemplateColumns: "repeat(24, minmax(55px, 1fr))",
               gridTemplateRows: `
                 minmax(100px, auto)
                 30px
@@ -482,7 +446,7 @@ function App() {
                 30px
                 minmax(100px, auto)
               `,
-              minWidth: "1100px", // Memaksa scroll horizontal muncul di HP
+              minWidth: "1350px", // Memaksa scroll horizontal muncul di HP
             }}
           >
             {renderGrid()}
