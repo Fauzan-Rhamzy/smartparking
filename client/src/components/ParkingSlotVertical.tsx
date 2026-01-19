@@ -20,7 +20,7 @@ function ParkingSlotVertical({
 
   return (
     <>
-      <svg width="40" height="100" viewBox="0 0 50 100">
+      <svg width="50" height="100" viewBox="0 0 50 100">
         <rect width="50" height="100" fill={color[status]} />
         <text
           x="25"
