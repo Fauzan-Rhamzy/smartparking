@@ -1,5 +1,4 @@
 function StairsArea() {
-  // Saya sesuaikan width menjadi 120 agar terlihat panjang seperti "tangga" di gambar
   return (
     <div
       className="flex flex-col items-center justify-center h-full bg-gray-300 border border-gray-500 text-xs text-center p-1 rounded"
